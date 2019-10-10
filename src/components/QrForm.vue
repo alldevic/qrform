@@ -15,16 +15,16 @@
                             <v-list-item-content>
                                 <v-list-item-title
                                     class="headline my-6 text-center font-weight-light"
-                                >Страница контейнера</v-list-item-title>
+                                >Страница контейнера №{{ currentChecklist.container_id }}</v-list-item-title>
                                 <v-list-item-subtitle
                                     class="font-weight-light"
-                                >Контейнек расположен по адресу г. Новокузнецк ул. Кирова, 33</v-list-item-subtitle>
+                                >Контейнек расположен по адресу {{ currentChecklist.platform_name }}</v-list-item-subtitle>
+                                <!-- <v-list-item-subtitle
+                                    class="font-weight-light"
+                                >Последний раз контейнер вывозился 03 часа назад</v-list-item-subtitle>-->
                                 <v-list-item-subtitle
                                     class="font-weight-light"
-                                >Последний раз контейнер вывозился 03 часа назад</v-list-item-subtitle>
-                                <v-list-item-subtitle
-                                    class="font-weight-light"
-                                >Контейнер принадлежит ООО Экотек</v-list-item-subtitle>
+                                >Контейнер принадлежит {{ currentChecklist.container_owner }}</v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </v-col>
@@ -35,25 +35,23 @@
                                     class="mb-4 font-weight-light"
                                     style="font-size: 16px"
                                 >Помогите нам и ответьте на несколько вопросов:</header>
-                                <div v-for="question in currentChecklist.questions" :key="question.id">
+                                <div
+                                    v-for="question in currentChecklist.questions"
+                                    :key="question.id"
+                                >
                                     <v-list-item-title>
                                         <span>{{ question.title }}</span>
                                     </v-list-item-title>
-                                    <v-flex
-                                        v-for="answer in question.answers"
-                                        :key="answer.id"
-                                        class="mx-auto"
-                                        style="width: 70%"
-                                    >
+                                    <v-flex class="mx-auto" style="width: 70%">
                                         <ValidationProvider rules="required" v-slot="{ errors }">
                                             <v-radio-group
-                                                v-model="answer.body"
+                                                v-model="question.body"
                                                 row
                                                 class="justify-end"
                                             >
-                                                <header class="mr-4">{{ answer.title }}</header>
+                                                <header class="mr-4">{{ question.text }}</header>
                                                 <v-radio
-                                                    v-for="n in ['Да', 'Нет']"
+                                                    v-for="n in question.choices ? question.choices.split(';'): ['Да', 'Нет']"
                                                     :key="n"
                                                     :label="n"
                                                     :value="n"
@@ -78,7 +76,6 @@
                             <v-btn tile color="primary" @click="passes(onSubmit)">Отправить</v-btn>
                         </v-card-actions>
                     </ValidationObserver>
-                    {{currentChecklist}}
                 </v-card>
             </v-col>
         </v-row>
@@ -88,7 +85,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-import types from '../store/types.js';
+import types from "../store/types.js";
 
 export default {
     name: "QrForm",
@@ -102,7 +99,9 @@ export default {
     computed: {
         ...mapGetters(["currentChecklist"])
     },
-    data: () => ({}),
+    data: () => ({
+        answers: {}
+    }),
     methods: {
         ...mapActions([types.FETCH_CHECKLIST]),
         onSubmit() {
