@@ -1,13 +1,13 @@
 <template>
-    <HelloWorld />
+    <qr-form />
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import QrForm from "../components/QrForm.vue";
 
 export default {
     components: {
-        HelloWorld,
+        QrForm,
     },
 };
 </script>
