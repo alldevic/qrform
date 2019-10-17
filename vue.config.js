@@ -7,7 +7,7 @@ module.exports = {
         data: '',
       },
       scss: {
-        data: `@import '@/styles/variables/_global.scss';`,
+        data: '@import "@/styles/abstracts/_variables.scss";',
       },
     },
   },

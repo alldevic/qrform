@@ -1,4 +1,4 @@
-<template>
+<template lang="pug">
   <HelloWorld />
 </template>
 
