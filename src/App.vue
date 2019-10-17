@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app
-    v-content(class="pt-5 pb-10")
+    v-content(class="pa-12")
       router-view
 </template>
 
