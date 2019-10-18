@@ -1,0 +1,86 @@
+.v-data-table {
+  thead {
+    th {
+      height: 56px;
+      padding-top: 8px;
+    }
+    background: $lighter;
+    // v-input
+    .v-input {
+      font-size: 14px;
+      line-height: 14px;
+      // Text field
+      &.v-text-field {
+        height: 100%;
+        margin-top: 0;
+        &>.v-input__control { 
+          height: inherit;
+          &>.v-input__slot {
+            padding-bottom: 6px;
+            height: inherit;
+            &:before {
+              border-color: $midDark;
+            }
+            // v-label
+            .v-label {
+              height: 24px;
+              font-size: inherit;
+              color: $secondary;
+            }
+          }
+        }
+      }
+      &__append-inner {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding-bottom: 4px;
+        margin: 0;
+        // v-chip
+        .v-chip {
+          background: none;
+          color: $secondaryLight;
+        }
+        // v-icon
+        .v-icon.v-icon {
+          font-size: 22px;
+        }
+      }
+      input { 
+        max-height: 100%;
+      }
+    }
+  }
+
+  tbody {
+    td {
+      height: 52px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      span {
+        font-size: 14px;
+        white-space: nowrap;
+      }
+    }
+  }
+  .v-input {
+    // Checkbox
+    &.v-input--selection-controls {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  
+  .long-row {
+    min-width: 220px;
+    max-width: 320px;
+  }
+  .middle-row {
+    min-width: 200px;
+    max-width: 320px;
+  }
+  .short-row {
+    min-width: 160px;
+    max-width: 180px;
+  }
+}

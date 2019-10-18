@@ -1,25 +1,4 @@
-// App
-.theme--light.v-application {
-  background-color: $secondaryLightest !important;
-}
-
-// Cards
-.theme--light.v-card {
-  .v-card__title {
-      padding: 35px 24px 32px 24px;
-  }
-}
-
-// Tables
-.theme--light.v-data-table {
-  .text-start {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    span {
-      white-space: nowrap;
-    }
-  }
-  .short-row {
-    max-width: 280px;
-  }
-}
+@import
+  'vuetify-components/v-app',
+  'vuetify-components/v-card',
+  'vuetify-components/v-data-table';

@@ -19,7 +19,7 @@ export default new Vuetify({
         error: '#D53760',
         errorLight: '#F5E4EA',
         warning: '#EBCB71',
-        warningLigh: '#FEF9ED',
+        warningLight: '#FEF9ED',
         success: '#75BC41',
         successLight: '#E9F7E9',
       },

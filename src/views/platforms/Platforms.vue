@@ -2,7 +2,7 @@
   v-card(outlined)
     v-card-title Контейнерные площадки
     v-card-text
-      v-data-table(
+      v-data-table.customize-table(
         v-model="selected"
         :headers="headers"
         :items="platforms"
@@ -10,53 +10,75 @@
         show-select
       )
         template(v-slot:header.code="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              v-icon.material-icons search
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(hide-details v-on="on")
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-icon.material-icons search
+            span {{ header.text }}
 
         template(v-slot:header.address="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              v-icon.material-icons search
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(hide-details v-on="on")
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-icon.material-icons search
+            span {{ header.text }}
 
         template(v-slot:header.lot="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              v-icon.material-icons arrow_drop_down
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(
+                hide-details
+                v-on="on"
+              )
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-icon.material-icons arrow_drop_down
+            span {{ header.text }}
 
         template(v-slot:header.status="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              v-icon.material-icons arrow_drop_down
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-select(
+                :items="statusName[status]"
+                clearable
+                hide-details
+                v-on="on"
+              )
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-icon.material-icons arrow_drop_down
+            span {{ header.text }}
 
         template(v-slot:header.contactsNumbers="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              span 123 / 322
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(hide-details v-on="on")
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-chip(small) 123 / 322
+            span {{ header.text }}
 
         template(v-slot:header.volume="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              span 123 / 322
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(hide-details v-on="on")
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-chip(small) 123 / 322
+            span {{ header.text }}
 
         template(v-slot:header.volumeShipped="{ header }")
-          v-text-field
-            template(v-slot:label)
-              | {{ header.text }}
-            template(v-slot:append)
-              span 123 / 322
+          v-tooltip(bottom)
+            template(v-slot:activator="{ on }")
+              v-text-field(hide-details v-on="on")
+                template(v-slot:label) {{ header.text }}
+                template(v-slot:append)
+                  v-chip(small) 123 / 322
+            span {{ header.text }}
 
         template(v-slot:item="{ item }")
           tr
@@ -65,47 +87,74 @@
                 v-model="selected"
                 :value="item"
                 color="primary"
+                hide-details
               )
-            td.text-start
-              span {{ item.code }}
             td.text-start.short-row
+              span {{ item.code }}
+            td.text-start.middle-row
               span {{ item.address }}
-            td.text-start
+            td.text-start.short-row
               span {{ item.lot }}
-            td.text-start
-              span {{ item.status }}
-            td.text-start
+            td.text-start.short-row
+              v-chip(:color="getStatusColor(item.status)")
+                | {{ statusName[item.status] }}
+            td.text-start.long-row
               span {{ item.contactsNumbers }}
-            td.text-start
+            td.text-start.middle-row
               span {{ item.volume }}
-            td.text-start
+            td.text-start.long-row
               span {{ item.volumeShipped }}
 </template>
 
 <script lang="ts">
+import PLATFORM_STATUS from '../../constants/constants';
+
 export default {
   data: () => ({
     selected: [],
     headers: [
-      { text: 'Код', value: 'code', sortable: false },
+      {
+        text: 'Код',
+        value: 'code',
+        sortable: false,
+      },
       {
         text: 'Адрес',
         value: 'address',
-        class: 'short-row',
         sortable: false,
       },
-      { text: 'Лот', value: 'lot', sortable: false },
-      { text: 'Статус', value: 'status', sortable: false },
-      { text: 'Количество контактов', value: 'contactsNumbers', sortable: false },
-      { text: 'Объём', value: 'volume', sortable: false },
-      { text: 'Объём отгруженного с места', value: 'volumeShipped', sortable: false },
+      {
+        text: 'Лот',
+        value: 'lot',
+        sortable: false,
+      },
+      {
+        text: 'Статус',
+        value: 'status',
+        sortable: false,
+      },
+      {
+        text: 'Количество контактов',
+        value: 'contactsNumbers',
+        sortable: false,
+      },
+      {
+        text: 'Объём',
+        value: 'volume',
+        sortable: false,
+      },
+      {
+        text: 'Объём отгруженного с места',
+        value: 'volumeShipped',
+        sortable: false,
+      },
     ],
     platforms: [
       {
         code: '321',
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
         lot: '342',
-        status: 'Отгружено',
+        status: PLATFORM_STATUS.shipped,
         contactsNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
@@ -114,12 +163,40 @@ export default {
         code: '322',
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
         lot: '342',
-        status: 'Отгружено',
+        status: PLATFORM_STATUS.atRegistration,
+        contactsNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        code: '323',
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
         contactsNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
       },
     ],
+    statusName: {
+      0: 'Отгружено',
+      1: 'На оформлении',
+      2: 'Заполнено',
+    },
   }),
+  methods: {
+    getStatusColor(status: Number) {
+      switch (status) {
+        case PLATFORM_STATUS.shipped:
+          return 'successLight';
+        case PLATFORM_STATUS.atRegistration:
+          return 'warningLight';
+        case PLATFORM_STATUS.filled:
+          return 'errorLight';
+        default:
+          return null;
+      }
+    },
+  },
 };
 </script>

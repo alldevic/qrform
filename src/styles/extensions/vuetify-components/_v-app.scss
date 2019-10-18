@@ -1,0 +1,13 @@
+.theme--light.v-application {
+  background-color: $secondaryLightest !important;
+
+  .successLight {
+    color: $success;
+  }
+  .warningLight {
+    color: $warning;
+  }
+  .errorLight {
+    color: $error;
+  }
+}
