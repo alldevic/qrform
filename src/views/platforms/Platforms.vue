@@ -6,18 +6,21 @@
         v-model="selected"
         :headers="headers"
         :items="platforms"
+        :search="search"
         item-key="code"
         show-select
       )
+        //- Code header column
         template(v-slot:header.code="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on")
+              v-text-field(hide-details v-on="on" v-model="search")
                 template(v-slot:label) {{ header.text }}
                 template(v-slot:append)
                   v-icon.material-icons search
             span {{ header.text }}
 
+        //- Address header column
         template(v-slot:header.address="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
@@ -27,6 +30,7 @@
                   v-icon.material-icons search
             span {{ header.text }}
 
+        //- Lot header column
         template(v-slot:header.lot="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
@@ -39,11 +43,12 @@
                   v-icon.material-icons arrow_drop_down
             span {{ header.text }}
 
+        //- Status header column
         template(v-slot:header.status="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
               v-select(
-                :items="statusName[status]"
+                :items="statusName"
                 clearable
                 hide-details
                 v-on="on"
@@ -53,6 +58,7 @@
                   v-icon.material-icons arrow_drop_down
             span {{ header.text }}
 
+        //- Contacts numbers header column
         template(v-slot:header.contactsNumbers="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
@@ -62,6 +68,7 @@
                   v-chip(small) 123 / 322
             span {{ header.text }}
 
+        //- Volume header column
         template(v-slot:header.volume="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
@@ -71,6 +78,7 @@
                   v-chip(small) 123 / 322
             span {{ header.text }}
 
+        //- Volume shipped header column
         template(v-slot:header.volumeShipped="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
@@ -80,6 +88,7 @@
                   v-chip(small) 123 / 322
             span {{ header.text }}
 
+        //- Platform row
         template(v-slot:item="{ item }")
           tr
             td.text-start
@@ -107,10 +116,12 @@
 </template>
 
 <script lang="ts">
+// Import constants
 import PLATFORM_STATUS from '../../constants/constants';
 
 export default {
   data: () => ({
+    search: '',
     selected: [],
     headers: [
       {
@@ -178,11 +189,11 @@ export default {
         volumeShipped: '450',
       },
     ],
-    statusName: {
-      0: 'Отгружено',
-      1: 'На оформлении',
-      2: 'Заполнено',
-    },
+    statusName: [
+      'Отгружено',
+      'На оформлении',
+      'Заполнено',
+    ],
   }),
   methods: {
     getStatusColor(status: Number) {
