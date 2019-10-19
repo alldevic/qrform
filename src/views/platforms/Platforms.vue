@@ -5,8 +5,7 @@
       v-data-table.customize-table(
         v-model="selected"
         :headers="headers"
-        :items="platforms"
-        :search="search"
+        :items="filteredPlatforms"
         item-key="code"
         show-select
       )
@@ -14,7 +13,7 @@
         template(v-slot:header.code="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on" v-model="search")
+              v-text-field(hide-details v-on="on" v-model="filters[header.value]")
                 template(v-slot:label) {{ header.text }}
                 template(v-slot:append)
                   v-icon.material-icons search
@@ -24,7 +23,7 @@
         template(v-slot:header.address="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on")
+              v-text-field(hide-details v-on="on" v-model="filters[header.value]")
                 template(v-slot:label) {{ header.text }}
                 template(v-slot:append)
                   v-icon.material-icons search
@@ -37,6 +36,7 @@
               v-text-field(
                 hide-details
                 v-on="on"
+                v-model="filters[header.value]"
               )
                 template(v-slot:label) {{ header.text }}
                 template(v-slot:append)
@@ -121,7 +121,11 @@ import PLATFORM_STATUS from '../../constants/constants';
 
 export default {
   data: () => ({
-    search: '',
+    filters: {
+      code: '',
+      address: '',
+      lot: '',
+    },
     selected: [],
     headers: [
       {
@@ -163,7 +167,7 @@ export default {
     platforms: [
       {
         code: '321',
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 24',
         lot: '342',
         status: PLATFORM_STATUS.shipped,
         contactsNumbers: '34532',
@@ -181,7 +185,7 @@ export default {
       },
       {
         code: '323',
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
         lot: '342',
         status: PLATFORM_STATUS.filled,
         contactsNumbers: '34532',
@@ -195,6 +199,15 @@ export default {
       'Заполнено',
     ],
   }),
+  computed: {
+    filteredPlatforms() {
+      return this.platforms.filter(d => {
+        return Object.keys(this.filters).every(f => {
+          return this.filters[f].length < 1 || d[f].includes(this.filters[f]);
+        });
+      });
+    },
+  },
   methods: {
     getStatusColor(status: Number) {
       switch (status) {
