@@ -47,6 +47,7 @@
         template(v-slot:header.status="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
+              //- Fixed tolltip
               v-select(
                 :items="statusName"
                 clearable
