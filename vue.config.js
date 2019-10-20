@@ -31,6 +31,6 @@ module.exports = {
     },
   },
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/evraz-invest-prod/'
+    ? '/ecotec-front-prod/'
     : '/',
 };
