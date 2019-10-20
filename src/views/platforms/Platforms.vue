@@ -47,12 +47,15 @@
         template(v-slot:header.status="{ header }")
           v-tooltip(bottom)
             template(v-slot:activator="{ on }")
-              //- Fixed tolltip
+              //- Tooltip doesn't work with v-select [bug]
+              //- Clerable props return undefined [error for filter]
               v-select(
-                :items="statusName"
-                clearable
+                :items="statusList"
+                item-text="name"
+                item-value="id" 
                 hide-details
                 v-on="on"
+                v-model="filters[header.value]"
               )
                 template(v-slot:label) {{ header.text }}
                 template(v-slot:append)
@@ -107,7 +110,7 @@
               span {{ item.lot }}
             td.text-start.short-row
               v-chip(:color="getStatusColor(item.status)")
-                | {{ statusName[item.status] }}
+                | {{ statusList[item.status].name }}
             td.text-start.long-row
               span {{ item.contactsNumbers }}
             td.text-start.middle-row
@@ -126,6 +129,7 @@ export default {
       code: '',
       address: '',
       lot: '',
+      status: '',
     },
     selected: [],
     headers: [
@@ -193,18 +197,36 @@ export default {
         volume: '300',
         volumeShipped: '450',
       },
+      {
+        code: '324',
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        contactsNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
     ],
-    statusName: [
-      'Отгружено',
-      'На оформлении',
-      'Заполнено',
+    statusList: [
+      { id: PLATFORM_STATUS.shipped, name: 'Отгружено' },
+      { id: PLATFORM_STATUS.atRegistration, name: 'На оформлении' },
+      { id: PLATFORM_STATUS.filled, name: 'Заполнено' },
     ],
   }),
   computed: {
     filteredPlatforms() {
-      return this.platforms.filter(d => {
-        return Object.keys(this.filters).every(f => {
-          return this.filters[f].length < 1 || d[f].includes(this.filters[f]);
+      let self = this;
+
+      function hasKey<O>(obj: O, key: string | number | symbol): key is keyof O {
+        return key in obj;
+      }
+      
+      return this.platforms.filter(function(platform) {
+        return Object.keys(self.filters).every(function(prop) {
+          if (hasKey(self.filters, prop)) {
+            // Depricated
+            return self.filters[prop].length < 1 || platform[prop].toString().includes(self.filters[prop].toString());
+          }
         });
       });
     },
