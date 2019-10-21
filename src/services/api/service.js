@@ -9,5 +9,11 @@ export const API = {
             method: "get",
             url: config.baseURL
         });
+    },
+    getPlatform() {
+        return axios({
+            method: "get",
+            url: config.baseURL
+        });
     }
 };

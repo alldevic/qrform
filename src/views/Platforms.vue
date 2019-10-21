@@ -1,84 +1,157 @@
 <template>
     <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-            <v-col cols="12" sm="6" md="4">
-                <v-card class="elevation-2 rounded-card" tile>
-                    <v-col class="pa-0">
-                        <v-list-item three-line class="flex-column px-6">
-                            <v-img
-                                class="mt-8"
-                                src="../../public/logo_ecotec.png"
-                                max-height="125"
-                                contain
-                                alt="Ecotec logo"
-                            ></v-img>
-                            <v-list-item-content>
-                                <v-list-item-title
-                                    class="headline my-6 text-center font-weight-light"
-                                >Страница контейнера</v-list-item-title>
-                                <v-list-item-subtitle
-                                    class="font-weight-light"
-                                >Контейнек расположен по адресу г. Новокузнецк ул. Кирова, 33</v-list-item-subtitle>
-                                <v-list-item-subtitle
-                                    class="font-weight-light"
-                                >Последний раз контейнер вывозился 03 часа назад</v-list-item-subtitle>
-                                <v-list-item-subtitle
-                                    class="font-weight-light"
-                                >Контейнер принадлежит ООО Экотек</v-list-item-subtitle>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-col>
-                    <ValidationObserver v-slot="{ passes }">
-                        <v-card-text class="px-6 pb-0">
-                            <v-form>
-                                <header
-                                    class="mb-4 font-weight-light"
-                                    style="font-size: 16px"
-                                >Помогите нам и ответьте на несколько вопросов:</header>
-                                <div v-for="question in currentChecklist.questions" :key="question.id">
-                                    <v-list-item-title>
-                                        <span>{{ question.title }}</span>
-                                    </v-list-item-title>
-                                    <v-flex
-                                        v-for="answer in question.answers"
-                                        :key="answer.id"
-                                        class="mx-auto"
-                                        style="width: 70%"
-                                    >
-                                        <ValidationProvider rules="required" v-slot="{ errors }">
-                                            <v-radio-group
-                                                v-model="answer.body"
-                                                row
-                                                class="justify-end"
+            <v-col cols="12">
+                <v-card class="" outlined>
+                    <v-data-table
+                        class="fb-table-elem"
+                        v-model="selected"
+                        :headers="headers"
+                        :items="platforms"
+                        hide-default-footer
+                        item-key="id"
+                        show-expand
+                        single-expand
+                        show-select
+                    >
+                        <!--
+                                                <template v-slot:header="{ props: { headers } }">
+                                                    <thead>
+                                                        <tr>
+                                                            <th v-for="item in headers" :key="item.name">
+                                                                <template v-if="item.value === 'data-table-select'">
+                                                                    <v-checkbox class="ma-0"
+                                                                        v-model="item.selected"
+                                                                        primary
+                                                                        hide-details
+                                                                    ></v-checkbox>
+                                                                </template>
+                                                                <template v-if="item.value === 'data-table-expand'">
+                                                                    <div></div>
+                                                                </template>
+                                                                <template v-else-if="item.type === 'input'">
+                                                                    {{ item.text }}
+                                                                </template>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </template>
+                         -->
+                        <!--
+                                                <template v-slot:body="{ items }">
+                                                    <tbody>
+                                                        <tr v-for="item in items" :key="item.name">
+                                                            <td>
+                                                                <v-checkbox class="ma-0"
+                                                                v-model="item.selected"
+                                                                primary
+                                                                hide-details
+                                                                ></v-checkbox>
+                                                            </td>
+                                                            <td>{{ item.name }}</td>
+                                                            <td class="text-xs-right">{{ item.calories }}</td>
+                                                            <td class="text-xs-right">{{ item.fat }}</td>
+                                                            <td class="text-xs-right">{{ item.carbs }}</td>
+                                                            <td class="text-xs-right">{{ item.protein }}</td>
+                                                            <td class="text-xs-right">{{ item.iron }}</td>
+                                                            <td class="text-xs-right">{{ item.iron }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </template>
+                         -->
+
+                        <!--
+                                                <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
+                                                    <v-btn @click="expand(true)" v-if="!isExpanded">Expand</v-btn>
+                                                    <v-btn @click="expand(false)" v-if="isExpanded">Close</v-btn>
+                                                </template>
+                         -->
+
+                        <template v-slot:expanded-item="{ headers, item }">
+                            <td :colspan="headers.length" class="pa-0">
+                                <v-card tile class="elevation-0">
+                                    <v-row justify="start">
+                                        <v-col cols="auto" class="pa-0 mr-6">
+                                            <v-img
+                                                height="100%"
+                                                min-width="200px"
+                                                src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+                                            ></v-img>
+                                        </v-col>
+
+                                        <v-col cols="auto" class="pa-0">
+                                            <v-row
+                                                class="flex-column ma-0 fill-height"
+                                                justify="center"
                                             >
-                                                <header class="mr-4">{{ answer.title }}</header>
-                                                <v-radio
-                                                    v-for="n in ['Да', 'Нет']"
-                                                    :key="n"
-                                                    :label="n"
-                                                    :value="n"
-                                                ></v-radio>
-                                            </v-radio-group>
-                                            <v-list-item-content
-                                                v-for="(error, i) in errors"
-                                                :key="i"
-                                            >
-                                                <v-list-item-subtitle
-                                                    class="font-weight-light text-center red--text"
-                                                >{{error}}</v-list-item-subtitle>
-                                            </v-list-item-content>
-                                        </ValidationProvider>
-                                    </v-flex>
-                                </div>
-                            </v-form>
-                        </v-card-text>
-                        <v-divider></v-divider>
-                        <v-card-actions class="justify-end px-6">
-                            <v-btn class="ma-2" tile outlined color="primary">Очистить</v-btn>
-                            <v-btn tile color="primary" @click="passes(onSubmit)">Отправить</v-btn>
-                        </v-card-actions>
-                    </ValidationObserver>
-                    {{currentChecklist}}
+                                                <v-col class="pa-0">
+                                                    <v-list class="pa-0">
+                                                        <v-list-item
+                                                            class="pa-0"
+                                                        >
+                                                            <v-list-item-content>
+                                                                <v-list-item-title
+                                                                    class="title mb-1"
+                                                                    >Площадка № {{item.id}}</v-list-item-title
+                                                                >
+                                                            </v-list-item-content>
+
+                                                            <v-chip
+                                                                class="ml-4"
+                                                                small
+                                                                >21.10.2019</v-chip
+                                                            >
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-col>
+
+                                                <v-col class="pa-0">
+                                                    <v-list
+                                                        class="pa-0"
+                                                        disabled
+                                                    >
+                                                        <v-list-item-group
+                                                            color="primary"
+                                                        >
+                                                            <v-list-item
+                                                                v-for="(item, i) in items"
+                                                                :key="i"
+                                                                class="mb-4"
+                                                                style="border-bottom: 1px solid black; background-color: #f0f3f8;"
+                                                            >
+                                                                <!-- <v-list-item-icon>
+                                                                    <v-icon v-text="item.icon"></v-icon>
+                                                                </v-list-item-icon> -->
+
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title
+                                                                        v-text="
+                                                                            item.title
+                                                                        "
+                                                                    ></v-list-item-title>
+                                                                    <v-list-item-subtitle
+                                                                        v-text="
+                                                                            item.text
+                                                                        "
+                                                                    ></v-list-item-subtitle>
+                                                                </v-list-item-content>
+                                                            </v-list-item>
+                                                        </v-list-item-group>
+                                                    </v-list>
+                                                </v-col>
+                                            </v-row>
+                                        </v-col>
+                                    </v-row>
+                                </v-card>
+                            </td>
+                        </template>
+
+                        <template v-slot:item.calories="{ item }">
+                            <v-chip :color="getColor(item.status)" dark>{{
+                                item.calories
+                            }}</v-chip>
+                        </template>
+                    </v-data-table>
                 </v-card>
             </v-col>
         </v-row>
@@ -86,16 +159,197 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import types from '../store/types.js';
+import { mapGetters, mapActions } from "vuex";
+import types from "@/store/types";
 
 export default {
     name: "Platform",
-    components: {
-        ValidationObserver,
-        ValidationProvider
+    created() {
+        // this.FETCH_PLATFORMS();
     },
-    data: () => ({})
+    computed: {
+        ...mapGetters(["platforms"]),
+    },
+    data: () => ({
+        selected: [],
+        dialog: false,
+        headers: [
+            {
+                text: "Код",
+                align: "left",
+                value: "id",
+                type: "input"
+            },
+            {
+                text: "Адрес",
+                value: "name",
+                type: "input"
+            },
+            {
+                text: "Лот",
+                value: "lot",
+                type: "input"
+            },
+            {
+                text: "Статус",
+                value: "status",
+                type: "input"
+            },
+            {
+                text: "Количество контейнеров",
+                value: "protein",
+                type: "input"
+            },
+            {
+                text: "Объём",
+                value: "iron",
+                type: "input"
+            },
+            {
+                text: "Объем отгруженного с места",
+                value: "iron",
+                type: "input"
+            },
+            { text: "", value: "data-table-expand" }
+        ],
+        desserts: [
+            {
+                name: "Frozen Yogurt",
+                calories: 159,
+                fat: 6.0,
+                carbs: 24,
+                protein: 4.0,
+                iron: "1%"
+            },
+            {
+                name: "Ice cream sandwich",
+                calories: 237,
+                fat: 9.0,
+                carbs: 37,
+                protein: 4.3,
+                iron: "1%"
+            },
+            {
+                name: "Eclair",
+                calories: 262,
+                fat: 16.0,
+                carbs: 23,
+                protein: 6.0,
+                iron: "7%"
+            },
+            {
+                name: "Cupcake",
+                calories: 305,
+                fat: 3.7,
+                carbs: 67,
+                protein: 4.3,
+                iron: "8%"
+            },
+            {
+                name: "Gingerbread",
+                calories: 356,
+                fat: 16.0,
+                carbs: 49,
+                protein: 3.9,
+                iron: "16%"
+            },
+            {
+                name: "Jelly bean",
+                calories: 375,
+                fat: 0.0,
+                carbs: 94,
+                protein: 0.0,
+                iron: "0%"
+            },
+            {
+                name: "Lollipop",
+                calories: 392,
+                fat: 0.2,
+                carbs: 98,
+                protein: 0,
+                iron: "2%"
+            },
+            {
+                name: "Honeycomb",
+                calories: 408,
+                fat: 3.2,
+                carbs: 87,
+                protein: 6.5,
+                iron: "45%"
+            },
+            {
+                name: "Donut",
+                calories: 452,
+                fat: 25.0,
+                carbs: 51,
+                protein: 4.9,
+                iron: "22%"
+            },
+            {
+                name: "KitKat",
+                calories: 518,
+                fat: 26.0,
+                carbs: 65,
+                protein: 7,
+                iron: "6%"
+            }
+        ],
+        items: [
+            {
+                title: "Вид площадки",
+                text: "На 4 контейнера",
+                icon: "mdi-folder"
+            },
+            { title: "Покрытие", text: "Гравий", icon: "mdi-account-multiple" },
+            { title: "Ограждение", text: "Сетчатое", icon: "mdi-star" },
+            { title: "Площадка КГО", text: "Отсутствует", icon: "mdi-history" }
+        ]
+    }),
+    methods: {
+        ...mapActions([types.FETCH_PLATFORMS]),
+        getColor(status) {
+            if (status < 160) return "green lighten-5 green--text";
+            else if (status > 500) return "red lighten-5 red--text";
+            else return "orange lighten-5 orange--text";
+        }
+    }
 };
 </script>
+
+<style lang="css" scope>
+table.table {
+    margin:0 auto;
+    width: 98%;
+    max-width: 98%;
+}
+
+.datatable-cell-wrapper {
+    width: inherit;
+    position: relative;
+    z-index: 4;
+    padding: 10px 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.datatable__expand-content .card__text {
+    z-index: 3;
+    position: relative;
+}
+.datatable-container {
+    position: absolute;
+    background-color: white;
+    top: -50px;
+    left: -14px;
+    right: -14px;
+    bottom: 0;
+    z-index: 2;
+    border:1px solid #ccc;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.15), 0 1px 10px 0 rgba(0,0,0,0.15), 0 2px 4px -1px rgba(0,0,0,0.2);
+}
+
+.v-data-table tbody tr.v-data-table__expanded__content {
+    box-shadow: none;
+}
+</style>

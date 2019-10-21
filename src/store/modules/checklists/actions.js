@@ -15,5 +15,19 @@ export const actions = {
                     reject(error);
                 });
         });
+    },
+    [types.FETCH_PLATFORMS]({ commit }) {
+        return new Promise((resolve, reject) => {
+            API.getPlatform()
+                .then(response => {
+                    console.log(response);
+                    commit(types.SET_PLATFORMS, response.data);
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
     }
 };

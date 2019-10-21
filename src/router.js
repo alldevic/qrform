@@ -17,7 +17,9 @@ export default new Router({
             path: "/platforms",
             name: "platforms",
             component: () =>
-                import(/* webpackChunkName: "platforms" */ "./views/Platforms.vue")
+                import(
+                    /* webpackChunkName: "platforms" */ "./views/Platforms.vue"
+                )
         }
     ]
 });

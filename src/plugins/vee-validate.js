@@ -6,8 +6,6 @@ import ru from "vee-validate/dist/locale/ru.json";
 extend("required", required);
 
 // Install messages
-console.log(ru);
-
 localize("ru", {
     messages: {
         ...ru.messages,
