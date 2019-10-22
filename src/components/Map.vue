@@ -4,6 +4,7 @@
 
 <script lang="ts">
 // Import components
+
 export default {
   data:() => ({}),
 };
