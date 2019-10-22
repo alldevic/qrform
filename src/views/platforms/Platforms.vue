@@ -71,10 +71,9 @@
                   clearable
                   hide-details
                   v-on="on"
+                  append-icon="arrow_drop_down"
                 )
                   template(v-slot:label) {{ header.text }}
-                  template(v-slot:append)
-                    v-icon.material-icons arrow_drop_down
               span {{ header.text }}
 
           //- Contacts numbers header column
