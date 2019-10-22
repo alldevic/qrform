@@ -8,7 +8,7 @@
                         v-model="selected"
                         :headers="headers"
                         :items="platforms"
-                        :items-per-page="-1"
+                        :items-per-page="10"
                         hide-default-footer
                         item-key="id"
                         show-expand
@@ -38,10 +38,10 @@
                                 </thead>
                             </template>
                          -->
-                        <!--
+                        
                             <template v-slot:body="{ items }">
                                 <tbody>
-                                    <tr v-for="item in items" :key="item.name">
+                                    <tr v-for="item in items" :key="item.name" @click="props.expanded = !props.expanded">
                                         <td>
                                             <v-checkbox class="ma-0"
                                             v-model="item.selected"
@@ -59,7 +59,7 @@
                                     </tr>
                                 </tbody>
                             </template>
-                         -->
+                        
 
                         <!--
                             <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">

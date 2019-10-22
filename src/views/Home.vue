@@ -1,5 +1,5 @@
 <template>
-    <qr-form />
+    <h1>Ecotec</h1>
 </template>
 
 <script>
