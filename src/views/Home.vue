@@ -1,5 +1,5 @@
 <template lang="pug">
-  <HelloWorld />
+  p HomePage
 </template>
 
 <script lang="ts">

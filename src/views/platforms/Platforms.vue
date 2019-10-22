@@ -1,141 +1,149 @@
 <template lang="pug">
-  v-card(outlined)
-    v-card-title Контейнерные площадки
-    v-card-text
-      v-data-table.customize-table(
-        v-model="selected"
-        :headers="headers"
-        :items="filteredPlatforms"
-        item-key="code"
-        show-select
-      )
-        //- Code header column
-        template(v-slot:header.code="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on" v-model="filters[header.value]")
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-icon.material-icons search
-            span {{ header.text }}
+  div
+    map
+    v-card(outlined)
+      v-card-title Контейнерные площадки
+      v-card-text
+        v-data-table(
+          v-model="selected"
+          :headers="headers"
+          :items="platforms"
+          :expanded.sync="expanded"
+          item-key="id"
+          show-select
+          single-expand
+          pointer
+          @click:row="getRowValue"
+        )
+          //- id header column
+          template(v-slot:header.id="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(
+                  hide-details
+                  v-on="on"
+                  v-model="filters[header.value]"
+                  append-icon="search"
+                  @click:append="toggle"
+                )
+                  template(v-slot:label) {{ header.text }}
+              span {{ header.text }}
 
-        //- Address header column
-        template(v-slot:header.address="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on" v-model="filters[header.value]")
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-icon.material-icons search
-            span {{ header.text }}
+          //- Address header column
+          template(v-slot:header.address="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(
+                  hide-details
+                  v-on="on"
+                  v-model="filters[header.value]"
+                  append-icon="search"
+                  @click:append="toggle"
+                )
+                  template(v-slot:label) {{ header.text }}
+              span {{ header.text }}
 
-        //- Lot header column
-        template(v-slot:header.lot="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(
-                hide-details
-                v-on="on"
-                v-model="filters[header.value]"
-              )
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-icon.material-icons arrow_drop_down
-            span {{ header.text }}
+          //- Lot header column
+          template(v-slot:header.lot="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(
+                  hide-details
+                  readonly
+                  single-line
+                  v-on="on"
+                  append-icon="arrow_drop_down"
+                  @click:append="toggle"
+                )
+                  template(v-slot:label) {{ header.text }}
+              span {{ header.text }}
 
-        //- Status header column
-        template(v-slot:header.status="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              //- Tooltip doesn't work with v-select [bug]
-              //- Clerable props return undefined [error for filter]
-              v-select(
-                :items="statusList"
-                item-text="name"
-                item-value="id" 
-                hide-details
-                v-on="on"
-                v-model="filters[header.value]"
-              )
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-icon.material-icons arrow_drop_down
-            span {{ header.text }}
+          //- Status header column
+          template(v-slot:header.status="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                //- Tooltip doesn't work with v-select [bug]
+                //- Clerable props return undefined [error for filter]
+                v-select(
+                  :items="statusList"
+                  item-text="name"
+                  item-value="id"
+                  clearable
+                  hide-details
+                  v-on="on"
+                )
+                  template(v-slot:label) {{ header.text }}
+                  template(v-slot:append)
+                    v-icon.material-icons arrow_drop_down
+              span {{ header.text }}
 
-        //- Contacts numbers header column
-        template(v-slot:header.contactsNumbers="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on")
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-chip(small) 123 / 322
-            span {{ header.text }}
+          //- Contacts numbers header column
+          template(v-slot:header.containersNumbers="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(hide-details v-on="on")
+                  template(v-slot:label) {{ header.text }}
+                  template(v-slot:append)
+                    v-chip(small) 123 / 322
+              span {{ header.text }}
 
-        //- Volume header column
-        template(v-slot:header.volume="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on")
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-chip(small) 123 / 322
-            span {{ header.text }}
+          //- Volume header column
+          template(v-slot:header.volume="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(hide-details v-on="on")
+                  template(v-slot:label) {{ header.text }}
+                  template(v-slot:append)
+                    v-chip(small) 123 / 322
+              span {{ header.text }}
 
-        //- Volume shipped header column
-        template(v-slot:header.volumeShipped="{ header }")
-          v-tooltip(bottom)
-            template(v-slot:activator="{ on }")
-              v-text-field(hide-details v-on="on")
-                template(v-slot:label) {{ header.text }}
-                template(v-slot:append)
-                  v-chip(small) 123 / 322
-            span {{ header.text }}
+          //- Volume shipped header column
+          template(v-slot:header.volumeShipped="{ header }")
+            v-tooltip(bottom)
+              template(v-slot:activator="{ on }")
+                v-text-field(hide-details v-on="on")
+                  template(v-slot:label) {{ header.text }}
+                  template(v-slot:append)
+                    v-chip(small) 123 / 322
+              span {{ header.text }}
 
-        //- Platform row
-        template(v-slot:item="{ item }")
-          tr
-            td.text-start
-              v-checkbox(
-                v-model="selected"
-                :value="item"
-                color="primary"
-                hide-details
-              )
-            td.text-start.short-row
-              span {{ item.code }}
-            td.text-start.middle-row
-              span {{ item.address }}
-            td.text-start.short-row
-              span {{ item.lot }}
-            td.text-start.short-row
-              v-chip(:color="getStatusColor(item.status)")
-                | {{ statusList[item.status].name }}
-            td.text-start.long-row
-              span {{ item.contactsNumbers }}
-            td.text-start.middle-row
-              span {{ item.volume }}
-            td.text-start.long-row
-              span {{ item.volumeShipped }}
+          //- Platform row customization
+          template(v-slot:item.address="{ item }")
+            span {{ item.address }}
+
+          template(v-slot:item.status="{ item }")
+            v-chip(:color="getStatusColor(item.status)")
+              | {{ statusList[item.status].name }}
+
+          //- Expanded row
+          template(v-slot:expanded-item="{ headers, item }")
+            td(:colspan="headers.length")
+              expanded-content(:itemId="item.id")
 </template>
 
 <script lang="ts">
 // Import constants
-import PLATFORM_STATUS from '../../constants/constants';
+import PLATFORM_STATUS from '@/constants/constants';
+import ExpandedContent from '@/components/ExpandedContent.vue';
+import Map from '@/components/Map.vue';
 
 export default {
+  components: {
+    ExpandedContent,
+    Map,
+  },
   data: () => ({
     filters: {
-      code: '',
-      address: '',
-      lot: '',
-      status: '',
+      // id: '',
+      // address: '',
+      // status: '',
     },
+    expanded: [],
     selected: [],
     headers: [
       {
         text: 'Код',
-        value: 'code',
+        value: 'id',
         sortable: false,
       },
       {
@@ -154,8 +162,8 @@ export default {
         sortable: false,
       },
       {
-        text: 'Количество контактов',
-        value: 'contactsNumbers',
+        text: 'Количество контейнеров',
+        value: 'containersNumbers',
         sortable: false,
       },
       {
@@ -171,38 +179,101 @@ export default {
     ],
     platforms: [
       {
-        code: '321',
+        id: 321,
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 24',
         lot: '342',
         status: PLATFORM_STATUS.shipped,
-        contactsNumbers: '34532',
+        containersNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
       },
       {
-        code: '322',
+        id: 322,
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
         lot: '342',
         status: PLATFORM_STATUS.atRegistration,
-        contactsNumbers: '34532',
+        containersNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
       },
       {
-        code: '323',
+        id: 323,
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
         lot: '342',
         status: PLATFORM_STATUS.filled,
-        contactsNumbers: '34532',
+        containersNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
       },
       {
-        code: '324',
+        id: 324,
         address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
         lot: '342',
         status: PLATFORM_STATUS.filled,
-        contactsNumbers: '34532',
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 325,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 326,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 327,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 328,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 329,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 330,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
+        volume: '300',
+        volumeShipped: '450',
+      },
+      {
+        id: 331,
+        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
+        lot: '342',
+        status: PLATFORM_STATUS.filled,
+        containersNumbers: '34532',
         volume: '300',
         volumeShipped: '450',
       },
@@ -214,22 +285,16 @@ export default {
     ],
   }),
   computed: {
-    filteredPlatforms() {
-      let self = this;
-
-      function hasKey<O>(obj: O, key: string | number | symbol): key is keyof O {
-        return key in obj;
-      }
-      
-      return this.platforms.filter(function(platform) {
-        return Object.keys(self.filters).every(function(prop) {
-          if (hasKey(self.filters, prop)) {
-            // Depricated
-            return self.filters[prop].length < 1 || platform[prop].toString().includes(self.filters[prop].toString());
-          }
-        });
-      });
-    },
+  // filteredPlatforms() {
+    // return this.platforms.filter(function(platform) {
+    //   return Object.keys(self.filters).every(function(prop) {
+    //     if (hasKey(self.filters, prop)) {
+    //       // Depricated
+    //       return self.filters[prop].length < 1 || platform[prop].includes(self.filters[prop]);
+    //     }
+    //   });
+    // });
+  // },
   },
   methods: {
     getStatusColor(status: Number) {
@@ -244,6 +309,21 @@ export default {
           return null;
       }
     },
+    getRowValue(item: never) {
+      const [expItem] = this.expanded;
+      this.expanded = this.expanded.includes(item) ? [] : [item];
+    },
+    toggle(value: any) {
+      console.log(value);
+    },
   },
+  // prepareFilters() {
+  //   const preparedFilters = {} as Object;
+  //   Object.entries(this.filters).forEach((key, value) => {
+  //     if (value) {
+  //       preparedFilters[key] = value;
+  //     }
+  //   });
+  // },
 };
 </script>

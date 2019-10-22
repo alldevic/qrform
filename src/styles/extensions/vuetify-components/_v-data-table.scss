@@ -1,4 +1,17 @@
-.v-data-table {
+.theme--light.v-data-table {
+  &[pointer] {
+    tbody {
+      tr {
+        &.v-data-table__expanded__row {
+          background: $lighter;
+        }
+        &:not(.v-data-table__expanded__content) {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
   thead {
     th {
       height: 56px;
@@ -57,10 +70,46 @@
   }
 
   tbody {
+    tr {
+      &.v-data-table__expanded__content {
+        box-shadow: none;
+      }
+      &:hover {
+        &:not(.v-data-table__expanded__content) {
+          background: $lighter !important;
+        }
+      }
+    }
+
     td {
       height: 52px;
       text-overflow: ellipsis;
       overflow: hidden;
+      color: $secondary;
+
+      // Need optimize
+      &:nth-of-type(2) {
+        @extend .short-row;
+      }
+      &:nth-of-type(3) {
+        @extend .long-row;
+      }
+      &:nth-of-type(4) {
+        @extend .short-row;
+      }
+      &:nth-of-type(5) {
+        @extend .short-row;
+      }
+      &:nth-of-type(6) {
+        @extend .middle-row;
+      }
+      &:nth-of-type(7) {
+        @extend .middle-row;
+      }
+      &:nth-of-type(8) {
+        @extend .long-row;
+      }
+
       span {
         font-size: 14px;
         white-space: nowrap;
@@ -74,14 +123,28 @@
       padding: 0;
     }
   }
+  .v-simple-checkbox {
+    .mdi-checkbox-blank-outline {
+      color: $secondaryLight;
+    }
+    .mdi-checkbox-marked,
+    .mdi-minus-box {
+      color: $primary;
+    }
+  }
+  .v-chip {
+    .v-chip__content {
+      font-weight: 500;
+    }
+  }
   
   .long-row {
     min-width: 220px;
-    max-width: 320px;
+    max-width: 300px;
   }
   .middle-row {
     min-width: 180px;
-    max-width: 300px;
+    max-width: 260px;
   }
   .short-row {
     min-width: 140px;
