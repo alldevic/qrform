@@ -120,6 +120,7 @@
 <script lang="ts">
 // Import constants
 import PLATFORM_STATUS from '@/constants/constants';
+// Import components
 import ExpandedContent from '@/components/ExpandedContent.vue';
 import Map from '@/components/Map.vue';
 
