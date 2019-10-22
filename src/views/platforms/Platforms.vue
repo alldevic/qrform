@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    map
+    //- map
     v-card(outlined)
       v-card-title Контейнерные площадки
       v-card-text
@@ -122,12 +122,10 @@
 import PLATFORM_STATUS from '@/constants/constants';
 // Import components
 import ExpandedContent from '@/components/ExpandedContent.vue';
-import Map from '@/components/Map.vue';
 
 export default {
   components: {
     ExpandedContent,
-    Map,
   },
   data: () => ({
     filters: {
