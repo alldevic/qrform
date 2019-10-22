@@ -8,6 +8,7 @@
                         v-model="selected"
                         :headers="headers"
                         :items="platforms"
+                        :items-per-page="-1"
                         hide-default-footer
                         item-key="id"
                         show-expand
@@ -15,56 +16,56 @@
                         show-select
                     >
                         <!--
-                                                <template v-slot:header="{ props: { headers } }">
-                                                    <thead>
-                                                        <tr>
-                                                            <th v-for="item in headers" :key="item.name">
-                                                                <template v-if="item.value === 'data-table-select'">
-                                                                    <v-checkbox class="ma-0"
-                                                                        v-model="item.selected"
-                                                                        primary
-                                                                        hide-details
-                                                                    ></v-checkbox>
-                                                                </template>
-                                                                <template v-if="item.value === 'data-table-expand'">
-                                                                    <div></div>
-                                                                </template>
-                                                                <template v-else-if="item.type === 'input'">
-                                                                    {{ item.text }}
-                                                                </template>
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                </template>
+                            <template v-slot:header="{ props: { headers } }">
+                                <thead>
+                                    <tr>
+                                        <th v-for="item in headers" :key="item.name">
+                                            <template v-if="item.value === 'data-table-select'">
+                                                <v-checkbox class="ma-0"
+                                                    v-model="item.selected"
+                                                    primary
+                                                    hide-details
+                                                ></v-checkbox>
+                                            </template>
+                                            <template v-if="item.value === 'data-table-expand'">
+                                                <div></div>
+                                            </template>
+                                            <template v-else-if="item.type === 'input'">
+                                                {{ item.text }}
+                                            </template>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </template>
                          -->
                         <!--
-                                                <template v-slot:body="{ items }">
-                                                    <tbody>
-                                                        <tr v-for="item in items" :key="item.name">
-                                                            <td>
-                                                                <v-checkbox class="ma-0"
-                                                                v-model="item.selected"
-                                                                primary
-                                                                hide-details
-                                                                ></v-checkbox>
-                                                            </td>
-                                                            <td>{{ item.name }}</td>
-                                                            <td class="text-xs-right">{{ item.calories }}</td>
-                                                            <td class="text-xs-right">{{ item.fat }}</td>
-                                                            <td class="text-xs-right">{{ item.carbs }}</td>
-                                                            <td class="text-xs-right">{{ item.protein }}</td>
-                                                            <td class="text-xs-right">{{ item.iron }}</td>
-                                                            <td class="text-xs-right">{{ item.iron }}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </template>
+                            <template v-slot:body="{ items }">
+                                <tbody>
+                                    <tr v-for="item in items" :key="item.name">
+                                        <td>
+                                            <v-checkbox class="ma-0"
+                                            v-model="item.selected"
+                                            primary
+                                            hide-details
+                                            ></v-checkbox>
+                                        </td>
+                                        <td>{{ item.name }}</td>
+                                        <td class="text-xs-right">{{ item.calories }}</td>
+                                        <td class="text-xs-right">{{ item.fat }}</td>
+                                        <td class="text-xs-right">{{ item.carbs }}</td>
+                                        <td class="text-xs-right">{{ item.protein }}</td>
+                                        <td class="text-xs-right">{{ item.iron }}</td>
+                                        <td class="text-xs-right">{{ item.iron }}</td>
+                                    </tr>
+                                </tbody>
+                            </template>
                          -->
 
                         <!--
-                                                <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
-                                                    <v-btn @click="expand(true)" v-if="!isExpanded">Expand</v-btn>
-                                                    <v-btn @click="expand(false)" v-if="isExpanded">Close</v-btn>
-                                                </template>
+                            <template v-slot:item.data-table-expand="{ item, isExpanded, expand }">
+                                <v-btn @click="expand(true)" v-if="!isExpanded">Expand</v-btn>
+                                <v-btn @click="expand(false)" v-if="isExpanded">Close</v-btn>
+                            </template>
                          -->
 
                         <template v-slot:expanded-item="{ headers, item }">
@@ -73,9 +74,12 @@
                                     <v-row justify="start">
                                         <v-col cols="auto" class="pa-0 mr-6">
                                             <v-img
+                                                min-height="200px"
+                                                max-height="400px"
                                                 height="100%"
-                                                min-width="200px"
-                                                src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+                                                max-width="600px"
+                                                :src="item.photo ? 'http://dev-auk.kuzro.ru' + item.photo: 'nophoto.png'"
+                                                contain
                                             ></v-img>
                                         </v-col>
 
@@ -90,17 +94,9 @@
                                                             class="pa-0"
                                                         >
                                                             <v-list-item-content>
-                                                                <v-list-item-title
-                                                                    class="title mb-1"
-                                                                    >Площадка № {{item.id}}</v-list-item-title
-                                                                >
+                                                                <v-list-item-title class="title mb-1">Площадка № {{item.id}}</v-list-item-title>
                                                             </v-list-item-content>
-
-                                                            <v-chip
-                                                                class="ml-4"
-                                                                small
-                                                                >21.10.2019</v-chip
-                                                            >
+                                                            <v-chip class="ml-4" small>21.10.2019</v-chip>
                                                         </v-list-item>
                                                     </v-list>
                                                 </v-col>
@@ -197,7 +193,7 @@ export default {
             },
             {
                 text: "Количество контейнеров",
-                value: "protein",
+                value: "count_fact",
                 type: "input"
             },
             {
@@ -211,88 +207,6 @@ export default {
                 type: "input"
             },
             { text: "", value: "data-table-expand" }
-        ],
-        desserts: [
-            {
-                name: "Frozen Yogurt",
-                calories: 159,
-                fat: 6.0,
-                carbs: 24,
-                protein: 4.0,
-                iron: "1%"
-            },
-            {
-                name: "Ice cream sandwich",
-                calories: 237,
-                fat: 9.0,
-                carbs: 37,
-                protein: 4.3,
-                iron: "1%"
-            },
-            {
-                name: "Eclair",
-                calories: 262,
-                fat: 16.0,
-                carbs: 23,
-                protein: 6.0,
-                iron: "7%"
-            },
-            {
-                name: "Cupcake",
-                calories: 305,
-                fat: 3.7,
-                carbs: 67,
-                protein: 4.3,
-                iron: "8%"
-            },
-            {
-                name: "Gingerbread",
-                calories: 356,
-                fat: 16.0,
-                carbs: 49,
-                protein: 3.9,
-                iron: "16%"
-            },
-            {
-                name: "Jelly bean",
-                calories: 375,
-                fat: 0.0,
-                carbs: 94,
-                protein: 0.0,
-                iron: "0%"
-            },
-            {
-                name: "Lollipop",
-                calories: 392,
-                fat: 0.2,
-                carbs: 98,
-                protein: 0,
-                iron: "2%"
-            },
-            {
-                name: "Honeycomb",
-                calories: 408,
-                fat: 3.2,
-                carbs: 87,
-                protein: 6.5,
-                iron: "45%"
-            },
-            {
-                name: "Donut",
-                calories: 452,
-                fat: 25.0,
-                carbs: 51,
-                protein: 4.9,
-                iron: "22%"
-            },
-            {
-                name: "KitKat",
-                calories: 518,
-                fat: 26.0,
-                carbs: 65,
-                protein: 7,
-                iron: "6%"
-            }
         ],
         items: [
             {

@@ -5,6 +5,15 @@
                 <span>Qr</span>
                 <span class="font-weight-light">Form</span>
             </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn
+                v-for="(item, i) in menu"
+                text
+                :key="i"
+                :to="item.link"
+            >
+                <span class="mr-2">{{ item.title }}</span>
+            </v-btn>
         </v-app-bar>
 
         <v-content>
@@ -16,6 +25,17 @@
 <script>
 export default {
     name: "App",
-    data: () => ({})
+    data: () => ({
+        menu: [
+            {
+                title: "Home",
+                link: "/"
+            },
+            {
+                title: "Platforms",
+                link: "/platforms"
+            },
+        ]
+    })
 };
 </script>
