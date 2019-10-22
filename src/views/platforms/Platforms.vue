@@ -24,7 +24,6 @@
                   v-on="on"
                   v-model="filters[header.value]"
                   append-icon="search"
-                  @click:append="toggle"
                 )
                   template(v-slot:label) {{ header.text }}
               span {{ header.text }}
@@ -38,7 +37,6 @@
                   v-on="on"
                   v-model="filters[header.value]"
                   append-icon="search"
-                  @click:append="toggle"
                 )
                   template(v-slot:label) {{ header.text }}
               span {{ header.text }}
@@ -53,7 +51,6 @@
                   single-line
                   v-on="on"
                   append-icon="arrow_drop_down"
-                  @click:append="toggle"
                 )
                   template(v-slot:label) {{ header.text }}
               span {{ header.text }}
@@ -311,9 +308,6 @@ export default {
     getRowValue(item: Object) {
       const [expItem] = this.expanded;
       this.expanded = this.expanded.includes(item) ? [] : [item];
-    },
-    toggle(value: any) {
-      console.log(value);
     },
   },
   // prepareFilters() {
