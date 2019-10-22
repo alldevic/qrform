@@ -308,7 +308,7 @@ export default {
           return null;
       }
     },
-    getRowValue(item: never) {
+    getRowValue(item: Object) {
       const [expItem] = this.expanded;
       this.expanded = this.expanded.includes(item) ? [] : [item];
     },
