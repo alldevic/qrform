@@ -1,0 +1,37 @@
+[
+  {
+    "text": "Код",
+    "value": "id",
+    "sortable": false
+  },
+  {
+    "text": "Адрес",
+    "value": "address",
+    "sortable": false
+  },
+  {
+    "text": "Лот",
+    "value": "lot",
+    "sortable": false
+  },
+  {
+    "text": "Статус",
+    "value": "status",
+    "sortable": false
+  },
+  {
+    "text": "Количество контейнеров",
+    "value": "containersNumbers",
+    "sortable": false
+  },
+  {
+    "text": "Объём",
+    "value": "volume",
+    "sortable": false
+  },
+  {
+    "text": "Объём отгруженного с места",
+    "value": "volumeShipped",
+    "sortable": false
+  }
+]

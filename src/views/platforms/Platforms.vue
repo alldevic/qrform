@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    //- map
+    ymap
     v-card(outlined)
       v-card-title Контейнерные площадки
       v-card-text
@@ -122,6 +122,9 @@
 import PLATFORM_STATUS from '@/constants/constants';
 // Import components
 import ExpandedContent from '@/components/ExpandedContent.vue';
+// Import data
+import dataHeaders from './data/headers.json';
+import dataPlatforms from './data/platforms.json';
 
 export default {
   components: {
@@ -135,144 +138,8 @@ export default {
     },
     expanded: [],
     selected: [],
-    headers: [
-      {
-        text: 'Код',
-        value: 'id',
-        sortable: false,
-      },
-      {
-        text: 'Адрес',
-        value: 'address',
-        sortable: false,
-      },
-      {
-        text: 'Лот',
-        value: 'lot',
-        sortable: false,
-      },
-      {
-        text: 'Статус',
-        value: 'status',
-        sortable: false,
-      },
-      {
-        text: 'Количество контейнеров',
-        value: 'containersNumbers',
-        sortable: false,
-      },
-      {
-        text: 'Объём',
-        value: 'volume',
-        sortable: false,
-      },
-      {
-        text: 'Объём отгруженного с места',
-        value: 'volumeShipped',
-        sortable: false,
-      },
-    ],
-    platforms: [
-      {
-        id: 321,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 24',
-        lot: '342',
-        status: PLATFORM_STATUS.shipped,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 322,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 23',
-        lot: '342',
-        status: PLATFORM_STATUS.atRegistration,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 323,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 324,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 325,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 326,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 327,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 328,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 329,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 330,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-      {
-        id: 331,
-        address: 'Россия, Кемеровская область, Мыски, ул.Советская 25',
-        lot: '342',
-        status: PLATFORM_STATUS.filled,
-        containersNumbers: '34532',
-        volume: '300',
-        volumeShipped: '450',
-      },
-    ],
+    headers: dataHeaders,
+    platforms: dataPlatforms,
     statusList: [
       { id: PLATFORM_STATUS.shipped, name: 'Отгружено' },
       { id: PLATFORM_STATUS.atRegistration, name: 'На оформлении' },
