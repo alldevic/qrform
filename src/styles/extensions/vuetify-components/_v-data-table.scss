@@ -2,7 +2,7 @@
   &[pointer] {
     tbody {
       tr {
-        &.v-data-table__expanded__row {
+        &.v-data-table__expanded {
           background: $lighter;
         }
         &:not(.v-data-table__expanded__content) {

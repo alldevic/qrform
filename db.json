@@ -1,0 +1,85 @@
+{
+  "platforms": {
+    "headers": [    
+      {
+        "text": "Код",
+        "value": "id",
+        "sortable": false
+      },
+      {
+        "text": "Адрес",
+        "value": "address",
+        "sortable": false
+      },
+      {
+        "text": "Лот",
+        "value": "lot",
+        "sortable": false
+      },
+      {
+        "text": "Статус",
+        "value": "status",
+        "sortable": false
+      },
+      {
+        "text": "Количество контейнеров",
+        "value": "containersNumbers",
+        "sortable": false
+      },
+      {
+        "text": "Объём",
+        "value": "volume",
+        "sortable": false
+      },
+      {
+        "text": "Объём отгруженного с места",
+        "value": "volumeShipped",
+        "sortable": false
+      }
+    ],
+    "items": [
+      {
+        "id": 321,
+        "address": "Россия, Кемеровская область, Мыски, ул.Советская 24",
+        "lot": 342,
+        "status": 0,
+        "containersNumbers": 34532,
+        "volume": 300,
+        "volumeShipped": 450
+      },
+      {
+        "id": 322,
+        "address": "Россия, Кемеровская область, Мыски, ул.Советская 23",
+        "lot": 342,
+        "status": 1,
+        "containersNumbers": 34532,
+        "volume": 300,
+        "volumeShipped": 450
+      },
+      {
+        "id": 323,
+        "address": "Россия, Кемеровская область, Мыски, ул.Советская 25",
+        "lot": 342,
+        "status": 2,
+        "containersNumbers": 34532,
+        "volume": 300,
+        "volumeShipped": 450
+      },
+      {
+        "id": 324,
+        "address": "Россия, Кемеровская область, Мыски, ул.Советская 25",
+        "lot": 342,
+        "status": 2,
+        "containersNumbers": 34532,
+        "volume": 300,
+        "volumeShipped": 450
+      }
+    ]
+  },
+  "containers": {
+
+  },
+  "routes": {
+      
+  }
+}

@@ -3,7 +3,10 @@
 </template>
 
 <script lang="ts">
-export default {
+// Import
+import Vue from 'vue';
+
+export default Vue.extend({
   props: {
     itemId: {
       type: Number,
@@ -11,5 +14,5 @@ export default {
     },
   },
   data:() => ({}),
-};
+});
 </script>

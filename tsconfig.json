@@ -10,16 +10,18 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "typeRoots": [
+      "./typings",
+      "./node_modules/@types"
+    ],
     "types": [
       "webpack-env",
-      "vuetify",
+      "vuetify"
     ],
     "paths": {
-      "*": ["types/*"],
-      "@/*": [
-        "src/*"
-      ]
+      "typings/*": ["typings/*"],
+      "@/*": ["src/*"],
     },
     "lib": [
       "esnext",
@@ -33,10 +35,10 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", "src/plugins/constant.js"
+    "tests/**/*.tsx",
+    "typings/**/*",
   ],
   "exclude": [
-    "node_modules",
-    "types"
+    "node_modules"
   ]
 }

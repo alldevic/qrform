@@ -13,9 +13,11 @@ module.exports = {
   },
   configureWebpack: {
     resolve: {
+      extensions: ['.ts', '.js'],
       alias: {
-        '@': path.resolve(__dirname, './src'),
-        'styles': path.resolve(__dirname, './src/styles/'),
+        '@': path.resolve(__dirname, 'src/'),
+        'typings': path.resolve(__dirname, 'typings/'),
+        'styles': path.resolve(__dirname, 'src/styles/'),
       },
     },
     module: {
