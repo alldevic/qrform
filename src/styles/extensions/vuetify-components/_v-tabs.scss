@@ -1,0 +1,12 @@
+.theme--light.v-tabs > .v-tabs-bar {
+  background-color: #ffffff00 !important;
+  .v-slide-group__wrapper {
+    &__content {
+
+    }
+  }
+  .v-tabs {
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+  }
+}

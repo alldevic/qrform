@@ -1,0 +1,115 @@
+.platform-expanded-info {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  &__img {
+    height: auto !important;
+    min-width: 200px !important;
+    max-width: 380px !important;
+    margin-right: 30px !important;
+    flex: 1 1 !important;
+  }
+
+  &__list {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex: 1.4 1 !important;
+    background: none !important;
+    padding-bottom: 0 !important;
+
+    .v-subheader {
+      display: block;
+      color: $secondary !important;
+      padding: 0;
+      height: auto;
+      margin-bottom: 18px;
+    }
+
+    .v-list-item {
+      flex: 0 0 auto !important;
+      background: $light;
+      border-bottom: 1px solid $midDark;
+
+      &__title {
+        font-size: 10px;
+        font-weight: 600;
+        margin-bottom: 5px !important;
+        color: $secondary;
+      }
+    }
+  }
+}
+
+.container-expanded-info {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+
+
+  &__head {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center;
+
+    .v-subheader {
+      display: block;
+      color: $secondary !important;
+      padding: 0;
+      height: auto;
+    }
+
+    &__pagination {}
+  }
+
+  &__wrap {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    background: $light;
+  }
+
+  &__content {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+
+  &__img {
+    height: auto !important;
+    min-width: 200px !important;
+    max-width: 380px !important;
+    margin-right: 30px !important;
+    flex: 1 1 !important;
+  }
+
+  &__list {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    flex: 1.4 1 !important;
+    background: none !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+
+    .v-list-item {
+      flex: 0 0 auto !important;
+      background: $light;
+      border-bottom: 1px solid $midDark;
+
+      &__title {
+        font-size: 10px;
+        font-weight: 600;
+        margin-bottom: 5px !important;
+        color: $secondary;
+      }
+    }
+  }
+}
