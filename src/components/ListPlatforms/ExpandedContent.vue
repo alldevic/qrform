@@ -17,7 +17,7 @@
                   | {{ item.title }}
                 v-list-item-subtitle
                   | {{ item.text }}
-      v-col(cols="6")
+      v-col(cols="6" class="pl-8")
         .container-expanded-info
           .container-expanded-info__head
             v-subheader
@@ -88,25 +88,23 @@
                       v-list-item-content
                         v-list-item-title Тип и объём (план. / факт.)
                         v-list-item-subtitle Пластик 1.1 / Металл 0.36
-            .qr
-              .qr__front
-                v-subheader
-                  h5 Передний QR
+            .qrcode
+              .qrcode__front-block.qrcode__item
+                span.qrcode__text Передний QR
                 v-img(
-                  src="http://www.pngmart.com/files/10/Qr-Code-Background-PNG.png"
+                  src="https://pngimg.com/uploads/qr_code/qr_code_PNG34.png"
                   height="auto"
                   min-width="40px"
-                  max-width="80px"
+                  max-width="60px"
                   contain
                 )
-              .qr__back
-                v-subheader
-                 h5 Задний QR
+              .qrcode__back-block.qrcode__item
+                span.qrcode__text Задний QR
                 v-img(
-                  src="http://www.pngmart.com/files/10/Qr-Code-Background-PNG.png"
+                  src="https://pngimg.com/uploads/qr_code/qr_code_PNG34.png"
                   height="auto"
                   min-width="40px"
-                  max-width="80px"
+                  max-width="60px"
                   contain)
 </template>
 
