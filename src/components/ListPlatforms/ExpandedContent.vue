@@ -24,25 +24,23 @@
               h3 Контейнер №321
             .container-expanded-info__pagination
               v-btn(
-                class="elevation-0 text-capitalize mr-4"
+                class="mr-4"
+                color="midLight grey--text"
                 rounded
-                color="grey lighten-3 grey--text"
-                dark
                 small
               ) Предыдущий
               v-btn(
-                class="elevation-0 text-capitalize mr-8"
-                rounded
+                class="mr-8"
                 color="primary"
-                dark
+                rounded
                 small
               ) Следующий
               v-chip(
-                small
+                color="midLight grey--text"
                 rounded
-                color="grey lighten-3 grey--text"
+                small
               ) 2/4
-          .container-expanded-info__wrap
+          .container-expanded-info__wrapper
             v-img.container-expanded-info__img(
               src="http://dev-auk.kuzro.ru/media/files/jpeg_20191007_141216__8j5gp1P.jpg"
             )
@@ -50,6 +48,7 @@
               v-tabs(
                 slot="extension"
                 v-model="tabs"
+                grow
               )
                 v-tab Основная информация
                 v-tab Отгрузки
@@ -88,24 +87,17 @@
                       v-list-item-content
                         v-list-item-title Тип и объём (план. / факт.)
                         v-list-item-subtitle Пластик 1.1 / Металл 0.36
-            .qrcode
+            .qrcode__wrapper
               .qrcode__front-block.qrcode__item
                 span.qrcode__text Передний QR
-                v-img(
+                v-img.qrcode__img(
                   src="https://pngimg.com/uploads/qr_code/qr_code_PNG34.png"
-                  height="auto"
-                  min-width="40px"
-                  max-width="60px"
-                  contain
                 )
               .qrcode__back-block.qrcode__item
                 span.qrcode__text Задний QR
-                v-img(
+                v-img.qrcode__img(
                   src="https://pngimg.com/uploads/qr_code/qr_code_PNG34.png"
-                  height="auto"
-                  min-width="40px"
-                  max-width="60px"
-                  contain)
+                )
 </template>
 
 <script lang="ts">
@@ -120,40 +112,6 @@ export default Vue.extend({
   },
   data:() => ({
     tabs: null,
-    tabItems: [
-      {
-        title: 'Основная информация',
-        container: [
-          { title: 'Тип и объём (план. / факт.)', text: 'Пластик 1.1 / Металл 0.36' },
-          { title: 'Имя массива', text: 'Дворы спартака 14' },
-          { title: 'Имя маршрута', text: 'O321AA' },
-        ],
-      },
-      {
-        title: 'Отгрузки',
-        container: [
-          { title: 'Тип и объём (план. / факт.)', text: 'Пластик 1.1 / Металл 0.36' },
-          { title: 'Имя массива', text: 'Дворы спартака 15' },
-          { title: 'Имя маршрута', text: 'O321AA' },
-        ],
-      },
-      {
-        title: 'Данные',
-        container: [
-          { title: 'Тип и объём (план. / факт.)', text: 'Пластик 1.1 / Металл 0.36' },
-          { title: 'Имя массива', text: 'Дворы спартака 16' },
-          { title: 'Имя маршрута', text: 'O321AA' },
-        ],
-      },
-      {
-        title: 'График',
-        container: [
-          { title: 'Тип и объём (план. / факт.)', text: 'Пластик 1.1 / Металл 0.36' },
-          { title: 'Имя массива', text: 'Дворы спартака 17' },
-          { title: 'Имя маршрута', text: 'O321AA' },
-        ],
-      },
-    ],
     items: [
       {
         title: 'Вид площадки',

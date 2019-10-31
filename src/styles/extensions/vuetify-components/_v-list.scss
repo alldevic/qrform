@@ -1,0 +1,29 @@
+.theme--light.v-list {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  flex: 1.4 1 !important;
+  background: none !important;
+  padding-bottom: 0 !important;
+
+  .v-subheader {
+    display: block;
+    color: $secondary !important;
+    padding: 0;
+    height: auto;
+    margin-bottom: 18px;
+  }
+
+  .v-list-item {
+    flex: 0 0 auto !important;
+    background: $light;
+    border-bottom: 1px solid $midDark;
+
+    &__title {
+      font-size: 10px;
+      font-weight: 600;
+      margin-bottom: 5px !important;
+      color: $secondary;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.v-btn {
+  height: 22px !important;
+  text-transform: capitalize !important;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2),
+              0 0 0 0 rgba(0, 0, 0, 0.14),
+              0 0 0 0 rgba(0, 0, 0, 0.12) !important;
+  &__content {
+    font-size: 10px !important;
+  }
+}

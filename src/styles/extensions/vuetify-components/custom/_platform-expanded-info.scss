@@ -1,0 +1,12 @@
+.platform-expanded-info {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  &__img {
+    height: auto !important;
+    min-width: 200px !important;
+    max-width: 380px !important;
+    margin-right: 30px !important;
+    flex: 1 1 !important;
+  }
+}
