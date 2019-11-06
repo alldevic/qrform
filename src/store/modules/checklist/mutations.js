@@ -1,4 +1,4 @@
-import types from "../../types";
+import types from "@/store/types.js";
 
 export const mutations = {
     [types.SET_CHECKLIST](state, payload) {

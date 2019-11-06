@@ -12,14 +12,6 @@ export default new Router({
             name: "home",
             component: () =>
                 import(/* webpackChunkName: "home" */ "./views/Home.vue")
-        },
-        {
-            path: "/platforms",
-            name: "platforms",
-            component: () =>
-                import(
-                    /* webpackChunkName: "platforms" */ "./views/Platforms.vue"
-                )
         }
     ]
 });

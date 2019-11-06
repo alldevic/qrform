@@ -1,5 +1,5 @@
 <template>
-    <h1>Ecotec</h1>
+    <qr-form></qr-form>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import QrForm from "../components/QrForm.vue";
 
 export default {
     components: {
-        QrForm,
-    },
+        QrForm
+    }
 };
 </script>
